@@ -1,0 +1,328 @@
+body {
+    background: #5c8a8a;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    min-height: 100vh;
+}
+.container {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 10px;
+}
+.game-title {
+    font-size: 2.1rem;
+    margin: 18px 0 4px 0;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+#startBtn {
+    margin-bottom: 12px;
+}
+.controls-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+#winLineContainer {
+    width: 320px;
+    height: 320px;
+    position: relative;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#winLine {
+    position: absolute;
+    top: 0; left: 0;
+    width: 320px; height: 320px;
+    pointer-events: none;
+    z-index: 3;
+}
+.game-board {
+    position: absolute;
+    top: 0; left: 0;
+    width: 320px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0.78;
+    transition: opacity 0.23s;
+}
+.game-board.active {
+    pointer-events: auto;
+    opacity: 1;
+}
+.board-row {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+.cell {
+    width: 90px;
+    height: 90px;
+    background: #f8f8c8;
+    border-radius: 18px;
+    font-size: 2.08rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(60,60,44,0.11);
+    cursor: pointer;
+    transition: background 0.16s, transform 0.14s;
+    user-select: none;
+    font-weight: 700;
+}
+.cell.disabled {
+    pointer-events: none;
+    opacity: 0.72;
+}
+.cell.x { color: #008027; }
+.cell.o { color: #7c19c5; }
+
+/* Button groups tightly packed */
+.control-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+.game-btn {
+    margin: 0;
+    padding: 9px 24px;
+    font-size: 1.04rem;
+    background: #222;
+    color: #fff;
+    border-radius: 13px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: background 0.16s;
+    font-weight: 600;
+    outline: none;
+    width: 185px;
+    max-width: 92vw;
+}
+.game-btn:disabled {
+    background: #b0b0b0;
+    color: #ececec;
+    cursor: not-allowed;
+}
+
+/* Score/status tightly under board */
+.status {
+    margin: 8px 0 0 0;
+    color: #25306a;
+    font-size: 1.02rem;
+    min-height: 18px;
+    font-weight: 500;
+    text-align: center;
+    width: 320px;
+}
+.scoreboard {
+    margin-top: 3px;
+    font-size: 0.97rem;
+    color: #21232a;
+    text-align: center;
+    width: 320px;
+}
+
+/* Modal/dialog styling */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background: rgba(33, 38, 61, 0.35);
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+.modal.hidden { display: none; }
+#setupForm {
+    background: #fdfdfe;
+    padding: 12px 10px 8px 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.13);
+    min-width: 190px;
+    width: 93vw;
+    max-width: 326px;
+}
+.setup-step {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.setup-step.hidden { display: none; }
+.modal-btn {
+    margin-top: 5px;
+    padding: 6px 13px;
+    background: #25306a;
+    color: #fff;
+    border-radius: 9px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.11s;
+    outline: none;
+}
+label {
+    display: flex;
+    flex-direction: column;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 2px;
+    font-size: 0.98rem;
+}
+input[type="text"], input[type="number"], select {
+    margin-top: 2px;
+    padding: 5px 7px;
+    font-size: 1rem;
+    border: 1px solid #b9b9b9;
+    border-radius: 7px;
+    background: #fff;
+    outline: none;
+    transition: border 0.10s;
+}
+input:focus, select:focus {
+    border: 1.5px solid #25306a;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    #winLineContainer,
+    .game-board {
+        width: 96vw;
+        height: 96vw;
+        min-width: 0;
+        min-height: 0;
+        max-width: 99vw;
+        max-height: 99vw;
+    }
+    #winLine {
+        width: 96vw;
+        height: 96vw;
+    }
+    .cell {
+        width: 29vw;
+        height: 29vw;
+        min-width: 42px; min-height: 42px;
+        font-size: 1.18rem;
+    }
+    .status, .scoreboard {
+        width: 96vw;
+        font-size: 0.96rem;
+    }
+    .container {
+        padding: 1vw 0 10px 0;
+    }
+    #setupForm {
+        min-width: 0;
+        width: 99vw;
+        max-width: 99vw;
+        padding: 7px 2vw 7px 2vw;
+    }
+    .game-btn { width: 99vw; max-width: 99vw; }
+}
+
+
+
+/* GIF overlay styles */
+.gif-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 150px;
+    height: 90px;
+    transform: translate(-50%, -50%);
+    background: rgba(250,250,250,0.92);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    box-shadow: 0 3px 18px 2px rgba(0,0,0,0.16);
+    border: 3px solid #222;
+    opacity: 1;
+    transition: opacity 0.28s;
+    padding: 5px;
+}
+.gif-box.hidden {
+    display: none;
+}
+.gif-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    /* Remove border from img, all border is on gif-box */
+}
+
+/* Responsive sizing for small screens */
+@media (max-width: 600px) {
+    .gif-box {
+        width: 44vw;
+        height: 25vw;
+        min-width: 80px;
+        min-height: 48px;
+        max-width: 80vw;
+        max-height: 30vw;
+        padding: 3vw;
+    }
+}
+
+#resultTableContainer {
+  margin-top: 10px;
+  width: 320px;
+  text-align: center;
+}
+
+#resultTable {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#resultTable thead th {
+  background-color: brown;
+  color: white;
+  border: 1px solid #6a441e;
+  padding: 8px;
+}
+
+#resultTable tbody td {
+  background-color: lightblue;
+  border: 1px solid #a9c4d4;
+  padding: 7px;
+}
+
+#resultTable tbody tr.winner-row td {
+  background-color: lightgreen !important;
+  font-weight: 700;
+}
+.hidden {
+  display: none;
+}
+
+
+#winLineContainer.hidden,
+.control-buttons.hidden,
+#startBtn.hidden,
+#scoreboard.hidden,
+#status.hidden {
+  display: none !important;
+}

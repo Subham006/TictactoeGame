@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1 class="game-title">Tic Tac Toe</h1>
+        <!-- Start Button -->
+        <button id="startBtn" class="game-btn">Start Game</button>
+        <!-- All controls and board grouped for tight layout -->
+        <div class="controls-block">
+            <div id="winLineContainer" style="position: relative;">
+                <!-- GIF overlay box on board (hidden by default) -->
+                <div id="gifBox" class="gif-box hidden">
+                    <img id="gifImage" src="" alt="Celebration GIF" />
+                </div>
+                <svg id="winLine" width="320" height="320"></svg>
+                <div id="gameBoard" class="game-board">
+                    <div class="board-row">
+                        <div id="cell-0" class="cell"></div>
+                        <div id="cell-1" class="cell"></div>
+                        <div id="cell-2" class="cell"></div>
+                    </div>
+                    <div class="board-row">
+                        <div id="cell-3" class="cell"></div>
+                        <div id="cell-4" class="cell"></div>
+                        <div id="cell-5" class="cell"></div>
+                    </div>
+                    <div class="board-row">
+                        <div id="cell-6" class="cell"></div>
+                        <div id="cell-7" class="cell"></div>
+                        <div id="cell-8" class="cell"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="control-buttons">
+                <button id="resetBtn" class="game-btn" disabled>Reset Game</button>
+                <!-- This restart button is only relevant in board phase, not the table phase -->
+            </div>
+        </div>
+        <!-- Status & Score -->
+        <div id="status" class="status"></div>
+        <div id="scoreboard" class="scoreboard"></div>
+
+        <!-- Result Table and the only visible restart button after game over -->
+        <div id="resultTableContainer" class="hidden">
+            <table id="resultTable">
+                <thead>
+                    <tr>
+                        <th>Player Name</th>
+                        <th>Playing With</th>
+                        <th>Wins</th>
+                        <th>Losses</th>
+                        <th>Draws</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be populated by JS -->
+                </tbody>
+            </table>
+            <!-- Only this button is shown after game over -->
+            <div id="postGameButtons" style="margin-top: 16px; display: flex; justify-content: center;">
+                <button id="restartBtn" class="game-btn">Restart Game</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Setup Modal -->
+    <div id="setupModal" class="modal hidden">
+        <form id="setupForm" onsubmit="return false;">
+            <!-- Step 1: Basic Setup -->
+            <div id="setupStep1" class="setup-step">
+                <label>How many rounds do you want to play?
+                    <input type="number" min="1" value="1" name="numRounds" required />
+                </label>
+                <label id="humanNameLabel" style="display: none;">What is your name Human?
+                    <input type="text" name="humanName" />
+                </label>
+                <label>Do you want to play with the creator?
+                    <select name="withCreator" id="withCreatorSelect" required>
+                        <option value="">Choose</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </label>
+                <button type="button" id="nextStep1" class="modal-btn">Next</button>
+            </div>
+            <!-- Step 2: Creator AI Setup -->
+            <div id="setupCreatorOptions" class="setup-step hidden">
+                <label>Do you want to play with Nought (O) or Cross (X)?
+                    <select name="symbolChoice" required>
+                        <option value="X">Cross (X)</option>
+                        <option value="O">Nought (O)</option>
+                    </select>
+                </label>
+                <label>Choose the Creator Level:
+                    <select name="creatorLevel" required>
+                        <option value="1">Level 1 - Subh (Novice)</option>
+                        <option value="2">Level 2 - SubhPro (Intermediate)</option>
+                        <option value="3">Level 3 - SubhGenius (Unbeatable)</option>
+                    </select>
+                </label>
+                <label>Who plays first?
+                    <select name="whoFirst" required>
+                        <option value="human">Yourself</option>
+                        <option value="creator">Creator</option>
+                    </select>
+                </label>
+                <button type="button" id="doneCreatorOpts" class="modal-btn">Done</button>
+            </div>
+            <!-- Step 3: Human vs Human -->
+            <div id="setupHumanVsHuman" class="setup-step hidden">
+                <label>Player 1 Name (X):
+                    <input type="text" name="player1" required />
+                </label>
+                <label>Player 2 Name (O):
+                    <input type="text" name="player2" required />
+                </label>
+                <button type="button" id="doneHumanOpts" class="modal-btn">Done</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Scratch Sound Effect -->
+    <audio id="scratchSound" src="audios/fx-scratch-01-379214 (1).mp3"></audio>
+
+    <script src="app.js"></script>
+</body>
+</html>
